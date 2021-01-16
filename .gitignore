@@ -1,0 +1,4 @@
+__pycache__/
+.vscode/
+
+car_agency_crm/secret.py
