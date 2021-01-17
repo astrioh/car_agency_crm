@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'car_agency_crm.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'car_agency',
+        'NAME': 'car_agency_django',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
