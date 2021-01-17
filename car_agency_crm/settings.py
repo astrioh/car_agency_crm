@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     # third party
     'rest_framework',
     'corsheaders',
+    # apps
+    'cars',
+    'dealers',
 ]
 
 MIDDLEWARE = [
