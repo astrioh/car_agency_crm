@@ -3,14 +3,14 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import IsAuthenticated
 
 from car_agency_crm.utils.standard_views import list_view, create_view, delete_view, edit_view
-from ..serializers import CarFullInfoSerializer, CarDefaultSerializer
+from ..serializers import CarSerializer
 from ..models import Car
 
 
 @api_view(['GET'])
 #@authentication_classes([IsAuthenticated])
 def car_list_view(request, *args, **kwargs):
-    response = list_view(Car, CarFullInfoSerializer, request, 10)
+    response = list_view(Car, CarSerializer, request, 10)
     return response
 
 
@@ -23,7 +23,7 @@ def car_detailed_view(request, car_id, *args, **kwargs):
         return Response({}, status=404)
 
     obj = qs.first()
-    serializer = CarFullInfoSerializer(obj)
+    serializer = CarSerializer(obj)
 
     return Response(serializer.data, status=200)
 
@@ -41,7 +41,7 @@ def car_detailed_view(request, car_id, *args, **kwargs):
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def car_create_view(request, *args, **kwargs):
-    response = create_view(CarDefaultSerializer, request, "Failed to create a car")
+    response = create_view(CarSerializer, request, "Failed to create a car")
     return response
 
 
@@ -54,5 +54,5 @@ def car_delete_view(request, car_id, *args, **kwargs):
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def car_edit_view(request, car_id, *args, **kwargs):
-    response = edit_view(Car, CarDefaultSerializer, request, car_id, "Failed to edit a car")
+    response = edit_view(Car, CarSerializer, request, car_id, "Failed to edit a car")
     return response

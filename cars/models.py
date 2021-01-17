@@ -19,6 +19,18 @@ class CarType(models.Model):
     name = models.CharField(max_length=30)
 
 
+class DefectType(models.Model):
+    name = models.CharField(max_length=30)
+
+
+class Defect(models.Model):
+    defect_type = models.ForeignKey(DefectType, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    text = models.CharField(max_length=350, blank=True, null=True)
+    image = models.ImageField(max_length=80, blank=True, null=True)
+    car = models.ForeignKey('Car', on_delete=models.CASCADE)
+
+
 class Car(models.Model):
     car_model = models.ForeignKey('CarModel', on_delete=models.CASCADE)
     dealer = models.ForeignKey(Dealer, on_delete=models.CASCADE)
@@ -38,17 +50,11 @@ class Car(models.Model):
     engine_power = models.IntegerField(blank=True, null=True)
     active = models.BooleanField(default=True)
 
+    def get_photos(self):
+        return CarPhoto.objects.filter(car=self)
 
-class DefectType(models.Model):
-    name = models.CharField(max_length=30)
-
-
-class Defect(models.Model):
-    defect_type = models.ForeignKey(DefectType, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    text = models.CharField(max_length=350, blank=True, null=True)
-    image = models.ImageField(max_length=80, blank=True, null=True)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    def get_defects(self):
+        return Defect.objects.filter(car=self)
 
 
 class DrivetrainType(models.Model):
