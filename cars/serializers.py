@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Car
 
+
 class CarFullInfoSerializer(serializers.ModelSerializer):
     car_model_name = serializers.CharField(source='car_model.name', read_only=True)
     brand_name = serializers.CharField(source='car_model.brand.name', read_only=True)
