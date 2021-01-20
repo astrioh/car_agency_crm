@@ -1,12 +1,24 @@
 from rest_framework import serializers
 
-from .models import Car, Defect, CarPhoto
+from .models import (
+    Car, 
+    Defect, 
+    CarPhoto, 
+    CarModel, 
+    CarType, 
+    EngineType, 
+    BodyType, 
+    Brand, 
+    DefectType, 
+    DrivetrainType, 
+    TransmissionType
+)
 
 
 class CarPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarPhoto
-        fields = ['id', 'image']
+        fields = ['id', 'image', 'car']
 
 
 class DefectSerializer(serializers.ModelSerializer):
@@ -37,4 +49,44 @@ class CarSerializer(serializers.ModelSerializer):
             'engine_type', 'engine_type_name', 'engine_volume', 'engine_power', 'car_photos', 'defects', 'active']
 
 
+# Car misc serializers. They all use same view where they are schosen by "switch" statement
+class DefectTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DefectType
+        fields = ['id', 'name']
 
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ['id', 'name']
+
+class CarModelSerializer(serializers.ModelSerializer):
+    brand_name = serializers.CharField(source='brand.name', read_only=True)
+    class Meta:
+        model = CarModel
+        fields = ['id', 'name', 'brand', 'brand_name']
+
+class CarTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarType
+        fields = ['id', 'name']
+
+class EngineTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EngineType
+        fields = ['id', 'name']
+
+class BodyTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BodyType
+        fields = ['id', 'name']
+
+class DrivetrainTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DrivetrainType
+        fields = ['id', 'name']
+
+class TransmissionTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransmissionType
+        fields = ['id', 'name']

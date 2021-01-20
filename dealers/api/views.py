@@ -15,23 +15,12 @@ def dealer_list_view(request, *args, **kwargs):
 
 '''
 {
-    "car_model": 1, 
-    "dealer": 1, 
-    "pts": "321", 
-    "vin": "312", 
-    "car_type": 1, 
-    "release_year": 222, 
-    "price": "31321",
-    "color": "bas", 
-    "mileage": 3123, 
-    "wheel": "fdsf",
-    "body_type": 1, 
-    "drivetrain_type": 1,
-    "transmission_type": 1, 
-    "engine_type": 1, 
-    "engine_volume": "23.2", 
-    "engine_power": 412, 
-    "active": true
+    "name": "dealer name",
+    "contact": "dealer contact",
+    "address": "dealer address",
+    "phone": "dealer phone",
+    "email": "dealer email",
+    "dealer_type": 1
 }
 '''
 @api_view(['POST'])
