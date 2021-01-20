@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # apps
     'cars',
     'dealers',
+    'clients',
 ]
 
 MIDDLEWARE = [
