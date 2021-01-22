@@ -9,8 +9,8 @@ import axios from 'axios';
 
 const CarView = ({ className }) => {
   const [cars, setCars] = useState([]);
-  const [nextUrl, setNextUrl] = useState('#');
-  const [prevUrl, setPrevUrl] = useState('#');
+  const [nextUrl, setNextUrl] = useState(null);
+  const [prevUrl, setPrevUrl] = useState(null);
 
   const getCarsFromBackend = (url) => {
     axios.get(url).then(({ data }) => {
