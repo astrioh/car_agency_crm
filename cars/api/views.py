@@ -1,4 +1,6 @@
+from django.db.models import Q 
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 
@@ -36,8 +38,17 @@ from ..models import (
 @api_view(['GET'])
 #@authentication_classes([IsAuthenticated])
 def car_list_view(request, *args, **kwargs):
-    response = list_view(Car, CarSerializer, request, 10)
-    return response
+    search_str = request.GET.get('search') or ''
+
+    qs = Car.objects.filter(Q(car_model__name__icontains=search_str) | Q(car_model__brand__name__icontains=search_str)).order_by('-id')
+
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+
+    paginated_qs = paginator.paginate_queryset(qs, request)
+    serializer = CarSerializer(paginated_qs, many=True)
+
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['GET'])
