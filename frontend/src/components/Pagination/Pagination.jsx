@@ -7,12 +7,16 @@ import './Pagination.scss';
 const Pagination = ({ prevUrl, nextUrl }) => {
   return (
     <div className='pagination'>
-      <a href={prevUrl} className='pagination__button'>
-        <FontAwesomeIcon icon={faAngleLeft} color='white' />
-      </a>
-      <a href={nextUrl} className='pagination__button'>
-        <FontAwesomeIcon icon={faAngleRight} color='white' />
-      </a>
+      {prevUrl && (
+        <a href={prevUrl} className='pagination__button'>
+          <FontAwesomeIcon icon={faAngleLeft} color='white' />
+        </a>
+      )}
+      {nextUrl && (
+        <a href={nextUrl} className='pagination__button'>
+          <FontAwesomeIcon icon={faAngleRight} color='white' />
+        </a>
+      )}
     </div>
   );
 };
