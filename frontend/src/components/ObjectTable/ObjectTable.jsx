@@ -22,7 +22,7 @@ const ObjectTable = ({ headings, data, className }) => {
         {data.map((dataRow, i) => (
           <tr key={i}>
             {dataRow.map((dataCol, i) => (
-              <td key={i}>{dataCol}</td>
+              <td key={i}>{dataCol || ''}</td>
             ))}
           </tr>
         ))}
