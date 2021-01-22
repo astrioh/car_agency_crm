@@ -10,7 +10,6 @@ const SearchInput = ({ onSearch, className }) => {
     <div className={'search ' + (className || '')}>
       <input
         type='text'
-        name=''
         onChange={(e) => setSearchString(e.target.value)}
         value={searchString}
         className='search__input'

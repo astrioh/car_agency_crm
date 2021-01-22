@@ -12,30 +12,21 @@ const CarView = ({ className }) => {
   const [nextUrl, setNextUrl] = useState('#');
   const [prevUrl, setPrevUrl] = useState('#');
 
-  useEffect(() => {
+  const getCarsFromBackend = () => {
     axios.get('http://localhost:8000/api/cars').then(({ data }) => {
       setCars(data.results);
 
-      let gotPrevUrl = data.previous === 'null' ? '#' : data.previous;
-      let gotNextUrl = data.next === 'null' ? '#' : data.next;
-
-      setPrevUrl(gotPrevUrl);
-      setNextUrl(gotNextUrl);
+      setPrevUrl(data.previous);
+      setNextUrl(data.next);
     });
+  };
+
+  useEffect(() => {
+    getCarsFromBackend();
   }, []);
 
   const searchHandler = (searchString) => {
-    axios
-      .get(`http://localhost:8000/api/cars?search=${searchString}`)
-      .then(({ data }) => {
-        setCars(data.results);
-
-        let gotPrevUrl = data.previous === 'null' ? '#' : data.previous;
-        let gotNextUrl = data.next === 'null' ? '#' : data.next;
-
-        setPrevUrl(gotPrevUrl);
-        setNextUrl(gotNextUrl);
-      });
+    getCarsFromBackend();
   };
 
   return (
