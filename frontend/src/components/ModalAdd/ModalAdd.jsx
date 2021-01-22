@@ -13,7 +13,7 @@ const ModalAdd = ({ form, modalTitle }) => {
       <button className='add-btn' onClick={handleShow}>
         +
       </button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} size='lg'>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitle || 'Добавить'}</Modal.Title>
         </Modal.Header>
