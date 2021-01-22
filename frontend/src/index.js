@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './fontawesome';
 import CarsPage from './pages/CarsPage/CarsPage';
+import './index.scss';
 
 const carsPageRenderHook = document.getElementById('cars-page');
 if (carsPageRenderHook) {

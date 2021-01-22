@@ -8,7 +8,6 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SideMenu.scss';
 
-import '../ArrowToggle/ArrowToggle';
 import ArrowToggle from '../ArrowToggle/ArrowToggle';
 
 const SideMenu = ({ className }) => {

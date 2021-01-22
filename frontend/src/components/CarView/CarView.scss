@@ -1,0 +1,14 @@
+.car-view {
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    margin-right: 2rem;
+  }
+
+  &__content {
+    margin-top: 4rem;
+  }
+}
