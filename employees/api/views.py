@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from car_agency_crm.utils.standard_views import list_view, create_view, delete_view, edit_view
 from ..serializers import EmployeeSerializer
@@ -40,3 +41,11 @@ def employee_delete_view(request, employee_id, *args, **kwargs):
 def employee_edit_view(request, employee_id, *args, **kwargs):
     response = edit_view(Employee, EmployeeSerializer, request, employee_id, "Failed to edit a employee")
     return response
+
+@api_view(['GET'])
+#@authentication_classes([IsAuthenticated])
+def employee_logged_view(request, *args, **kwargs):
+    employee = Employee.objects.filter(user=request.user).first()
+    serializer = EmployeeSerializer(employee)
+
+    return Response(serializer.data, status=200)

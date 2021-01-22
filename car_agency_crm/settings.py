@@ -167,8 +167,13 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer'
     ]
+    DEFAULT_AUTHENTICATION_CLASSES += [
+        'car_agency_crm.rest_api.dev.DevAuthentication'
+    ]
+
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ['rest_framework.permissions.IsAuthenticated',],
     "DEFAULT_AUTHENTICATION_CLASSES": DEFAULT_AUTHENTICATION_CLASSES,
     "DEFAULT_RENDERER_CLASSES": DEFAULT_RENDERER_CLASSES
 }
