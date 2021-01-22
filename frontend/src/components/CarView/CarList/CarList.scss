@@ -1,0 +1,11 @@
+.car-list {
+  flex-grow: 1;
+
+  &__car {
+    margin-bottom: 4rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

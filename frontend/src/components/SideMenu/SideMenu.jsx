@@ -19,7 +19,7 @@ const SideMenu = ({ className }) => {
       .then(({ data }) => {
         setProfileName(data.username);
       });
-  });
+  }, []);
 
   return (
     <Navbar bg='dark' variant='dark' className={className || ''}>
