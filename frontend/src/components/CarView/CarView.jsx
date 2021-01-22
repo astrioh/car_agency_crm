@@ -12,8 +12,8 @@ const CarView = ({ className }) => {
   const [nextUrl, setNextUrl] = useState('#');
   const [prevUrl, setPrevUrl] = useState('#');
 
-  const getCarsFromBackend = () => {
-    axios.get('http://localhost:8000/api/cars').then(({ data }) => {
+  const getCarsFromBackend = (url) => {
+    axios.get(url).then(({ data }) => {
       setCars(data.results);
 
       setPrevUrl(data.previous);
@@ -22,11 +22,11 @@ const CarView = ({ className }) => {
   };
 
   useEffect(() => {
-    getCarsFromBackend();
+    getCarsFromBackend('http://localhost:8000/api/cars');
   }, []);
 
   const searchHandler = (searchString) => {
-    getCarsFromBackend();
+    getCarsFromBackend(`http://localhost:8000/api/cars?search=${searchString}`);
   };
 
   return (
