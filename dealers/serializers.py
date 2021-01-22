@@ -8,5 +8,5 @@ class DealerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Dealer
-        fields = ['name', 'dealer_type_name', 'dealer_type', 'image', 'contact', 'address',
+        fields = ['id', 'name', 'dealer_type_name', 'dealer_type', 'image', 'contact', 'address',
             'phone', 'email']
