@@ -7,6 +7,7 @@ import CarsPage from './pages/CarsPage/CarsPage';
 import ClientsPage from './pages/ClientsPage/ClientsPage';
 import DealersPage from './pages/DealersPage/DealersPage';
 import EmployeesPage from './pages/EmployeesPage/EmployeesPage';
+import ContractsPage from './pages/ContractsPage/ContractsPage';
 import './index.scss';
 
 const carsPageRenderHook = document.getElementById('cars-page');
@@ -33,10 +34,18 @@ if (dealersPageRenderHook) {
   );
 }
 
-const employeesPageRenderHook = document.getElementById('dealers-page');
+const employeesPageRenderHook = document.getElementById('employees-page');
 if (employeesPageRenderHook) {
   ReactDOM.render(
     React.createElement(EmployeesPage, employeesPageRenderHook.dataset),
     employeesPageRenderHook
+  );
+}
+
+const contractsPageRenderHook = document.getElementById('contracts-page');
+if (contractsPageRenderHook) {
+  ReactDOM.render(
+    React.createElement(ContractsPage, contractsPageRenderHook.dataset),
+    contractsPageRenderHook
   );
 }
