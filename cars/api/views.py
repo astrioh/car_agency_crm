@@ -91,8 +91,13 @@ TODO: handle multiple images and multiple defects upload
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def car_create_view(request, *args, **kwargs):
-    response = create_view(CarSerializer, request, "Failed to create a car")
-    return response
+    serializer = CarSerializer(data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data, status=201)
+
+    return Response({"message": "Ошибка создания машины"}, status=400)
 
 
 @api_view(['POST'])
@@ -129,6 +134,16 @@ misc_serializers = {
     'drivetrain_type': DrivetrainTypeSerializer,
     'transmission_type': TransmissionTypeSerializer,
 }
+
+@api_view(['GET'])
+def misc_list_view(request, *args, **kwargs):
+    misc_list = {}
+    for i, misc_model in misc_models.items():
+        qs = misc_model.objects.all()
+        serializer = misc_serializers[i](qs, many=True)
+        misc_list[i] = serializer.data
+
+    return Response(misc_list, status=200)
 '''
 {
     "model": "car_type",
