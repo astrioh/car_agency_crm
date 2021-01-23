@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/dealers/', include('dealers.api.urls')),
     path('api/clients/', include('clients.api.urls')),
     path('api/employees/', include('employees.api.urls')),
+    path('api/contracts/', include('contracts.api.urls')),
 ]
 
 if settings.DEBUG:
