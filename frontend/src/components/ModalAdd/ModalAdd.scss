@@ -12,6 +12,12 @@
   background-color: #007bff;
 
   &:hover {
-    background-color: darken($color: #007bff, $amount: 5);
+    background-color: darken(#007bff, 5);
+  }
+}
+
+.form {
+  input, select, button, label {
+    font-size: 1.6rem;
   }
 }
