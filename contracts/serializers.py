@@ -10,7 +10,7 @@ class ContractSerializer(serializers.ModelSerializer):
     employee = EmployeeSerializer(read_only=True)
     client = ClientSerializer(read_only=True)
     car = CarSerializer(read_only=True)
-    payment_type_name = serializers.CharField(source='get_payment_type_display', read_only=True)
+    payment_type_name = serializers.CharField(source='payment_type.name', read_only=True)
 
     class Meta:
         model = Contract
