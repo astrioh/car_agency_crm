@@ -4,6 +4,7 @@ import CarList from './CarList/CarList';
 import SearchInput from '../SearchInput/SearchInput';
 import ModalAdd from '../ModalAdd/ModalAdd';
 import Pagination from '../Pagination/Pagination';
+import FormAddOrEditCar from './FormAddOrEditCar/FormAddOrEditCar';
 import './CarView.scss';
 import axios from 'axios';
 
@@ -21,6 +22,20 @@ const CarView = ({ className }) => {
     });
   };
 
+  const addCarHandler = (newCar) => {
+    const carList = cars.pop();
+    setCars([newCar, carList]);
+  };
+
+  const deleteCarHandler = (carId) => {
+    let newCars = cars.filter((car) => car.id !== carId);
+    setCars(newCars);
+
+    axios.post(`http://localhost:8000/api/cars/${carId}/delete`);
+  };
+
+  const pageChangeHandler = (url) => getCarsFromBackend(url);
+
   useEffect(() => {
     getCarsFromBackend('http://localhost:8000/api/cars');
   }, []);
@@ -33,15 +48,25 @@ const CarView = ({ className }) => {
     <div className={'car-view ' + (className || '')}>
       <div className='car-view__header'>
         <h1 className='title car-view__title'>Машины</h1>
-        <ModalAdd modalTitle='Добавить машину' />
+        <ModalAdd modalTitle='Добавить машину'>
+          <FormAddOrEditCar />
+        </ModalAdd>
       </div>
       <div className='content-pane car-view__content'>
         <SearchInput
           onSearch={searchHandler}
           className='content-view__search'
         />
-        <CarList cars={cars} className='car-view__list' />
-        <Pagination prevUrl={prevUrl} nextUrl={nextUrl} />
+        <CarList
+          cars={cars}
+          onDelete={deleteCarHandler}
+          className='car-view__list'
+        />
+        <Pagination
+          onPageChange={pageChangeHandler}
+          prevUrl={prevUrl}
+          nextUrl={nextUrl}
+        />
       </div>
     </div>
   );
