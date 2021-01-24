@@ -91,7 +91,7 @@ TODO: handle multiple images and multiple defects upload
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def car_create_view(request, *args, **kwargs):
-    serializer = CarSerializer(data=request.data)
+    serializer = CarSerializer(data=request.data, context={'request': request})
 
     if serializer.is_valid(raise_exception=True):
         serializer.save()

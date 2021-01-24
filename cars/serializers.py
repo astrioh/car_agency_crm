@@ -1,4 +1,5 @@
 from rest_framework import serializers
+import json
 
 from .models import (
     Car, 
@@ -38,8 +39,51 @@ class CarSerializer(serializers.ModelSerializer):
     drivetrain_type_name = serializers.CharField(source='drivetrain_type.name', read_only=True)
     transmission_type_name = serializers.CharField(source='transmission_type.name', read_only=True)
     engine_type_name = serializers.CharField(source='engine_type.name', read_only=True)
-    car_photos = CarPhotoSerializer(source='get_photos', many=True)
-    defects = DefectSerializer(source='get_defects', many=True)
+    car_photos = CarPhotoSerializer(source='get_photos', many=True, required=False)
+    defects = DefectSerializer(source='get_defects', many=True, required=False)
+
+    def create(self, validated_data):
+        images = self.context.get('request').POST.getlist('car_photos[]')
+        defects = self.context.get('request').POST.getlist('defects[]')
+
+        print(defects)
+        for val in validated_data:
+            print(validated_data[val])
+
+        car = Car.objects.create(
+            car_model=validated_data.get('car_model'),
+            car_type=validated_data.get('car_type'),
+            dealer=validated_data.get('dealer'),
+            pts=validated_data.get('pts'),
+            vin=validated_data.get('vin'),
+            color=validated_data.get('color'),
+            mileage=validated_data.get('mileage'),
+            release_year=validated_data.get('release_year'),
+            price=validated_data.get('price'),
+            engine_type=validated_data.get('engine_type'),
+            engine_volume=validated_data.get('engine_volume'),
+            engine_power=validated_data.get('engine_power'),
+            body_type=validated_data.get('body_type'),
+            drivetrain_type=validated_data.get('drivetrain_type'),
+            transmission_type=validated_data.get('transmission_type')
+        )
+
+        for image in images:
+            CarPhotoSerializer.create(CarPhotoSerializer(), validated_data={'car': car, 'image': image})
+
+
+        for defect in defects:
+            defect = json.loads(defect)
+            print(defect)
+            defect_type = DefectType.objects.get(id=defect['defect_type'])
+            defect_data = {
+                'car': car, 
+                'defect_type': defect_type,
+                'name': defect['name'],
+                'text': defect['text'],
+                'image': defect['image']
+            }
+            DefectSerializer.create(DefectSerializer(), validated_data=defect_data)
 
     class Meta:
         model = Car
