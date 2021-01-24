@@ -2,6 +2,7 @@ __pycache__/
 .vscode/
 
 car_agency_crm/secret.py
+media/cars/
 
 # Frontend
 frontend/node_modules/
