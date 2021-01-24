@@ -5,11 +5,19 @@ import Pagination from '../Pagination/Pagination';
 import ObjectTable from '../ObjectTable/ObjectTable';
 import './ContractView.scss';
 import axios from 'axios';
+import FormAddOrEditContract from './FormAddOrEditContract/FormAddOrEditContract';
 
 const EmployeeView = ({ className }) => {
   const [contracts, setContracts] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [prevUrl, setPrevUrl] = useState(null);
+  const [employee, setEmployee] = useState({});
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000/api/employees/get_auth_employee')
+      .then(({ data }) => setEmployee(data));
+  }, []);
 
   const headings = [
     'Id',
@@ -40,6 +48,17 @@ const EmployeeView = ({ className }) => {
     return preparedContracts;
   };
 
+  const addContractHandler = (newContract) => {
+    setContracts([newContract, ...contracts]);
+  };
+
+  const deleteContractHandler = (contractId) => {
+    let newCars = contracts.filter((contract) => contract[0] !== contractId);
+    setContracts(newCars);
+
+    axios.post(`http://localhost:8000/api/contracts/${contractId}/delete`);
+  };
+
   const pageChangeHandler = (url) => {
     axios.get(url).then(({ data }) => {
       setContracts(prepareTableData(data.results));
@@ -62,9 +81,15 @@ const EmployeeView = ({ className }) => {
     <div className={'contract-view ' + (className || '')}>
       <div className='contract-view__header'>
         <h1 className='title contract-view__title'>Контракты</h1>
-        <ModalAdd modalTitle='Добавить сотрудника' />
+        <ModalAdd modalTitle='Добавить контракт'>
+          <FormAddOrEditContract
+            employee={employee}
+            onSubmit={addContractHandler}
+          />
+        </ModalAdd>
       </div>
       <ObjectTable
+        onDelete={deleteContractHandler}
         data={contracts}
         headings={headings}
         className='contract-view__table'

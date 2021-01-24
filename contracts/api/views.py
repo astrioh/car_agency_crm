@@ -1,6 +1,8 @@
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from employees.models import Employee
 from car_agency_crm.utils.standard_views import list_view, create_view, delete_view, edit_view
 from ..serializers import ContractSerializer, PaymentTypeSerializer
 from ..models import Contract, PaymentType
@@ -13,6 +15,11 @@ def contract_list_view(request, *args, **kwargs):
     return response
 
 
+
+@api_view(['GET'])
+def payment_list_view(request, *args, **kwargs):
+    response = list_view(PaymentType, PaymentTypeSerializer, request, 100)
+    return response
 '''
 {
 }
@@ -20,8 +27,22 @@ def contract_list_view(request, *args, **kwargs):
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def contract_create_view(request, *args, **kwargs):
-    response = create_view(ContractSerializer, request, "Failed to add a new contract")
-    return response
+    user_role = Employee.objects.get(user=request.user).role.name
+    if user_role != 'consultant':
+        return Response({"message": "У вас нет доступа к заключению контрактов"}, status=403)
+    
+    serializer = ContractSerializer(data=request.data, 
+        context={
+            'employee_id': int(request.data.get('employee')), 
+            'client_id': int(request.data.get('client')), 
+            'car_id': int(request.data.get('car')), 
+            'payment_type_id': int(request.data.get('payment_type'))})
+
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+        return Response(serializer.data, status=201)
+
+    return Response({"message": error_message}, status=400)
 
 
 @api_view(['POST'])
