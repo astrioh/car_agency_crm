@@ -69,7 +69,22 @@ const FormAddOrEditContract = ({ contractId, employee, onSubmit }) => {
           'Content-Type': 'application/json',
         },
       })
-      .then(({ data }) => onSubmit(data));
+      .then(({ data }) => {
+        const employeeName = `${data.employee.last_name} ${data.employee.first_name} ${data.employee.middle_name}`;
+        const clientName = `${data.client.last_name} ${data.client.first_name} ${data.client.middle_name}`;
+        const carName = `${data.car.brand_name} ${data.car.car_model_name}`;
+
+        const newContract = [
+          data.id,
+          employeeName,
+          clientName,
+          carName,
+          data.price,
+          data.payment_type_name,
+          data.date,
+        ];
+        onSubmit(newContract);
+      });
   };
 
   const editContractHandler = (e) => {

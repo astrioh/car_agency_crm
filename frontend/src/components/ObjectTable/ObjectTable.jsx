@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import './ObjectTable.scss';
 
 const ObjectTable = ({ headings, data, className, onDelete }) => {
+  console.log(data);
   return (
     <Table
       striped
