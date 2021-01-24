@@ -4,18 +4,24 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Pagination.scss';
 
-const Pagination = ({ prevUrl, nextUrl }) => {
+const Pagination = ({ prevUrl, nextUrl, onPageChange }) => {
   return (
     <div className='pagination'>
       {prevUrl && (
-        <a href={prevUrl} className='pagination__button'>
+        <div
+          onClick={() => onPageChange(prevUrl)}
+          className='pagination__button'
+        >
           <FontAwesomeIcon icon={faAngleLeft} color='white' />
-        </a>
+        </div>
       )}
       {nextUrl && (
-        <a href={nextUrl} className='pagination__button'>
+        <div
+          onClick={() => onPageChange(nextUrl)}
+          className='pagination__button'
+        >
           <FontAwesomeIcon icon={faAngleRight} color='white' />
-        </a>
+        </div>
       )}
     </div>
   );
