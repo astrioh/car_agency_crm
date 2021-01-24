@@ -15,20 +15,27 @@ def contract_list_view(request, *args, **kwargs):
     return response
 
 
-
 @api_view(['GET'])
 def payment_list_view(request, *args, **kwargs):
     response = list_view(PaymentType, PaymentTypeSerializer, request, 100)
     return response
+
+
 '''
 {
+    "employee":1,
+    "client":"2",
+    "car":"1002",
+    "price":"31231",
+    "payment_type":"2"
 }
 '''
 @api_view(['POST'])
 #@authentication_classes([IsAuthenticated])
 def contract_create_view(request, *args, **kwargs):
     user_role = Employee.objects.get(user=request.user).role.name
-    if user_role != 'consultant':
+
+    if user_role != "consultant" and user_role != "admin":
         return Response({"message": "У вас нет доступа к заключению контрактов"}, status=403)
     
     serializer = ContractSerializer(data=request.data, 
@@ -48,6 +55,7 @@ def contract_create_view(request, *args, **kwargs):
 @api_view(['POST'])
 def contract_delete_view(request, contract_id, *args, **kwargs):
     response = delete_view(Contract, contract_id, "contract deleted successfully")
+    return response;
 
 
 @api_view(['POST'])
