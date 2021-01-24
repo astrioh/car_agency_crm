@@ -7,7 +7,7 @@ import './ContractView.scss';
 import axios from 'axios';
 import FormAddOrEditContract from './FormAddOrEditContract/FormAddOrEditContract';
 
-const EmployeeView = ({ className }) => {
+const EmployeeView = ({ className, employeeRole }) => {
   const [contracts, setContracts] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [prevUrl, setPrevUrl] = useState(null);
@@ -81,12 +81,14 @@ const EmployeeView = ({ className }) => {
     <div className={'contract-view ' + (className || '')}>
       <div className='contract-view__header'>
         <h1 className='title contract-view__title'>Контракты</h1>
-        <ModalAdd modalTitle='Добавить контракт'>
-          <FormAddOrEditContract
-            employee={employee}
-            onSubmit={addContractHandler}
-          />
-        </ModalAdd>
+        {(employeeRole === 1 || employeeRole === 3) && (
+          <ModalAdd modalTitle='Добавить контракт'>
+            <FormAddOrEditContract
+              employee={employee}
+              onSubmit={addContractHandler}
+            />
+          </ModalAdd>
+        )}
       </div>
       <ObjectTable
         onDelete={deleteContractHandler}

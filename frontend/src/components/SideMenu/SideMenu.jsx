@@ -32,7 +32,7 @@ const SideMenu = ({ className }) => {
       <Nav className='flex-column'>
         <Nav.Item className='nav-item__accordion'>
           <Accordion>
-            <Nav.Link eventKey='/cars' href='cars'>
+            <Nav.Link eventKey='/cars' href='/cars'>
               Машины
             </Nav.Link>
             <ArrowToggle eventKey='0' />
@@ -42,10 +42,10 @@ const SideMenu = ({ className }) => {
           </Accordion>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link>Сделки</Nav.Link>
-          <Nav.Link>Клиенты</Nav.Link>
-          <Nav.Link>Дилеры</Nav.Link>
-          <Nav.Link>Сотрудники</Nav.Link>
+          <Nav.Link href='/contracts'>Сделки</Nav.Link>
+          <Nav.Link href='/clients'>Клиенты</Nav.Link>
+          <Nav.Link href='/dealers'>Дилеры</Nav.Link>
+          <Nav.Link href='/employees'>Сотрудники</Nav.Link>
         </Nav.Item>
       </Nav>
     </Navbar>
