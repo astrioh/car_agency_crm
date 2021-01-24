@@ -23,8 +23,7 @@ const CarView = ({ className }) => {
   };
 
   const addCarHandler = (newCar) => {
-    const carList = cars.pop();
-    setCars([newCar, carList]);
+    setCars([newCar, ...cars]);
   };
 
   const deleteCarHandler = (carId) => {
